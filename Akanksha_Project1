@@ -1,0 +1,232 @@
+import mysql.connector as sqltor
+mycon=sqltor.connect(host='localhost',user='root',passwd='root',database='school')
+cursor=mycon.cursor()
+
+mm='Y'
+while mm.upper()=='Y':
+    
+    txt= "SCHOOL MANAGEMENT SYSTEM"
+    heading= txt.center(75," ")
+    print(heading)
+    print()
+    print()
+    print("1. Accept a new Student's record")
+    print("2. Display all the details ")
+    print("3. Search the detail of a student")
+    print("4. Delete a student's record")
+    print("5. Update detail of a given record")
+    ch=int(input("Select the option for task you want to perform(1-5): "))
+    print()
+
+    if ch==1:
+        regno=int(input("Enter student's registration number: "))
+        sname=input("Enter the name of the student: ")
+        dob= input("Enter Date Of Birth in format yyyy-mm-dd: ")
+        address=input("Enter the Address: ")
+        perc=float(input("Enter the percentage obtained: "))
+        qs="insert into students values ({},'{}','{}','{}',{})".format(regno,sname,dob,address,perc)
+        cursor.execute(qs)
+        mycon.commit()
+    
+    if ch==2:
+        cursor.execute("select * from students")
+        data=cursor.fetchall()
+        for rec in data:
+            print(rec)
+        
+    if ch==3:
+        print("Search by: ")
+        print("1. Registration Number")
+        print("2. Date of birth")
+        print("3. Address")
+        print("4. Percentage Obtained")
+        sb=int(input("Input value(1-5): "))
+        print()
+        print("Press 1 to get only names of students assciated. ")
+        print("Press 2 to get all the details of the students associated.")
+        dv=int(input("Input(1 or 2)"))
+    
+        if dv==1:
+            if sb==1:
+                x=int(input("Enter the Registration number to get student's details: "))
+                qs="select studentname from students where RegNo={}".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            
+            if sb==2:
+                x=input("Enter the Date Of Birth(in format yyyy-mm-dd) to get student's details: ")
+                qs="select studentname from students where dob='{}'".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==3:
+                x=input("Enter the Address to get student's details: ")
+                qs="select studentname from students where address='{}'".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==4:
+                x=float(input("Enter the Percentage obtained to get student's details: "))
+                qs="select studentname from students where percentage={}".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+
+
+
+
+
+        if dv==2:
+            if sb==1:
+                x=int(input("Enter the Registration number to get student's details: "))
+                qs="select * from students where RegNo={}".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==2:
+                x=input("Enter the Student's Name to get student's details: ")
+                qs="select * from students where studentname='{}'".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==3:
+                x=input("Enter the Date Of Birth(in format yyyy-mm-dd) to get student's details: ")
+                qs="select * from students where dob='{}'".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==4:
+                x=input("Enter the Address to get student's details: ")
+                qs="select * from students where address='{}'".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+            
+            if sb==5:
+                x=float(input("Enter the Percentage obtained to get student's details: "))
+                qs="select * from students where percentage={}".format(x)
+                cursor.execute(qs)
+                data=cursor.fetchall()
+                for rec in data:
+                    print(rec)
+    
+    
+    if ch==4:
+
+        print("Delete by: ")
+        print("1. Registration Number")
+        print("2. Student Name")
+        print("3. Date of birth")
+        print("4. Address")
+        print("5. Percentage Obtained")
+        sb=int(input("Input value(1-5): "))
+
+        if sb==1:
+            x=int(input("Enter the Registration number to delete student's record associated: "))
+            qs="delete from students where RegNo={}".format(x)
+            cursor.execute(qs)
+            
+            
+        if sb==2:
+            x=input("Enter the Student's Name to delete student's record associated: ")
+            qs="delete from students where studentname='{}'".format(x)
+            cursor.execute(qs)
+            
+            
+        if sb==3:
+            x=input("Enter the Date Of Birth(in format yyyy-mm-dd) to delete student's record associated: ")
+            qs="delete from students where dob='{}'".format(x)
+            cursor.execute(qs)
+            
+            
+        if sb==4:
+            x=input("Enter the Address to delete student's record associated: ")
+            qs="delete from students where address='{}'".format(x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+            
+        if sb==5:
+            x=float(input("Enter the Percentage obtained to delete student's record associated: "))
+            qs="select * from students where percentage={}".format(x)
+            cursor.execute(qs)
+            
+        
+    if ch==5:
+
+        print("Update: ")
+        print("1. Registration Number")
+        print("2. Student Name")
+        print("3. Date of birth")
+        print("4. Address")
+        print("5. Percentage Obtained")
+        sb=int(input("Input value(1-5): "))
+
+        if sb==1:
+            x=int(input("Enter the Registration number to update student's record associated: "))
+            y=int(input("Enter the new value: "))
+            qs="update students set RegNo={} where RegNo={}".format(y,x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+            
+        if sb==2:
+            x=input("Enter the Student's Name to update student's record associated: ")
+            y=input("Enter the new value: ")
+            qs="update students set studentname='{}' where studentname='{}'".format(y,x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+            
+        if sb==3:
+            x=input("Enter the Date Of Birth(in format yyyy-mm-dd) to update student's record associated: ")
+            y=input("Enter the new value: ")
+            qs="update students set dob='{}' where dob='{}'".format(y,x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+            
+        if sb==4:
+            x=input("Enter the Address to update student's record associated: ")
+            y=input("Enter the new value: ")
+            qs="update students set address='{}' where address='{}'".format(y,x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+            
+        if sb==5:
+            x=float(input("Enter the Percentage obtained to update student's record associated: "))
+            y=float(input("Enter the new value: "))
+            qs="update students set percentage={} where percentage={}".format(x)
+            cursor.execute(qs)
+            data=cursor.fetchall()
+            for rec in data:
+                print(rec)
+
+    print()
+    print("Remember that N will abort the program! ")
+    print()
+    mm=input("Back to Main Menu ? (Y/N): ") 
+
+
+
